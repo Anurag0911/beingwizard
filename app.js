@@ -3,7 +3,10 @@ const mongoose = require('mongoose');
 // load env variables
 const dotenv = require('dotenv');
 dotenv.config()
+ 
 
+
+// this is a comment
 
 //db connection
 mongoose.connect(
