@@ -3,6 +3,12 @@ const mongoose = require('mongoose');
 // load env variables
 const dotenv = require('dotenv');
 dotenv.config()
+
+// for the uder signin
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+
  
 
 
@@ -33,9 +39,17 @@ require('dotenv').config();
 //     res.send('Updated !!! hello  from node');
 // });
 
+// middleware
+app.use(morgan('dev'));
+app.use(bodyParser.json());   // so that we get the jsaon data from the body 
+app.use(cookieParser());   // that we can stop the data as cookies for transport purposes 
+
 
 // import routes
-const userRoutes = require('./routes/user')
+const userRoutes = require('./routes/user');
+const { json } = require('body-parser');
+
+
 
 
 // routes from routes directry ie routes middleware 
