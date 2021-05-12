@@ -25,8 +25,7 @@ const userSchema = new mongoose.Schema({
 
     about_user: {
         type: String,
-        trim: true, // for the space before and after 
-        unique: true  // it should be unique
+        trim: true, // for the space before and after
     },
     salt: String,
 

@@ -9,7 +9,10 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
- 
+
+
+//import for the error in the filling of the form ie validator  
+const expressValidator = require("express-validator");
 
 
 // this is a comment
@@ -43,7 +46,7 @@ require('dotenv').config();
 app.use(morgan('dev'));
 app.use(bodyParser.json());   // so that we get the jsaon data from the body 
 app.use(cookieParser());   // that we can stop the data as cookies for transport purposes 
-
+app.use(expressValidator());  // this is a old veriosn and will be updated sometime else 
 
 // import routes
 const userRoutes = require('./routes/user');
