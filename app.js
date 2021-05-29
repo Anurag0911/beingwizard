@@ -49,7 +49,7 @@ app.use(cookieParser());   // that we can stop the data as cookies for transport
 app.use(expressValidator());  // this is a old veriosn and will be updated sometime else 
 
 // import routes
-const userRoutes = require('./routes/user');
+const userRoutes = require('./routes/auth');
 const { json } = require('body-parser');
 
 

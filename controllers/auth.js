@@ -30,7 +30,7 @@ exports.signup = (req, res) => {
 
 
 const jwt = require("jsonwebtoken"); // this is to generate signed token 
-const expressjwt = require("expressjwt"); // for authorization check 
+const expressjwt = require("express-jwt"); // for authorization check 
 
 
 exports.signin= (req,res)=>{
@@ -39,11 +39,17 @@ exports.signin= (req,res)=>{
     User.findOne({email},(err, user)=>{       // findone funtion us to find the email from the database
         if ( err || !user ){
             return res.status(400).json({
-                err : "User with this email does not exist please signup"
+                error : "User with this email does not exist please signup"
             });
         }   
         // if the user is found than lets authorize
-        
+        if (!user.authenticate(password)){
+            return res.status(401).json({    // 401 is for unauthorized access
+                error: "email and pass dont match "
+            })
+        }
+
+
         
         //generate a signed token for user id and secerat
         const token = jwt.sign({_id: user.id},process.env.JWT_SECRET);
@@ -61,10 +67,15 @@ exports.signin= (req,res)=>{
     })
 
 
+
+
 };
 
 
-
+exports.signout = (req,res)=>{
+    res.clearCookie('tok');
+    res.json({message : "signed out!!"});
+};
 
 exports.greet = (req, res) => {
     res.json({
@@ -72,5 +83,13 @@ exports.greet = (req, res) => {
     });
 };
 
+// this need the cookie parser installed which we did in the app.js
+exports.requireSignin = expressjwt ({  // this is a midllware to protect any routes 
+    secret: process.env.JWT_SECRET,  
+    algorithms: ["HS256"],          
+    userProperty : "auth"
+
+
+});
 
 
